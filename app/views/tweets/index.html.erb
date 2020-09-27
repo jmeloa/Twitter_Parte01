@@ -1,0 +1,49 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Bienvenido a Twitter</h1>
+<% if user_signed_in? %>
+    <p align="right">Bienvenido <%= current_user.user_name %></p>
+<% end %>
+
+<%= button_to 'Nuevo Tweet', new_tweet_path, method: 'get' %>
+
+<%= will_paginate @tweets, previous_label: h("<"), next_label: h(">") %>
+<table class="table table-striped">
+  <thead>
+    <tr >
+      <th scope="col">#</th>
+      <th scope="col">Post</th>
+      <th scope="col" align="center">User</th>
+      <th scope="col" >Creado</th>
+      <th scope="col" align="center">#Likes</th>
+      <th scope="col" align="center">#Retweets</th>
+      <th scope="col" colspan="3" align="center">Acciones</th>
+    
+    </tr>
+  </thead>
+
+  <tbody>
+    <% a = 1 %>
+    <% @tweets.each do |tweet| %>
+      <tr>
+      
+        <th scope="row"><%=a + (5*(@tweets.current_page-1))%></th>
+        <td><%= truncate(tweet.post, :length =>80) %></td>
+        <td align="center"><%= image_tag(tweet.user.user_photo, style: "max-width: 50px; border-radius: 20px;") %></td>
+        <td align="center"><%= time_ago_in_words(tweet.user.created_at) %></td>
+        <td align="center"><%=tweet.likes.count%></td>
+        <td align="center">2</td>
+        <td align="center"><%= link_to 'Show', tweet %></td>
+        <td align="center"><%= link_to 'Edit', edit_tweet_path(tweet) %></td>
+        <td align="center"><%= link_to 'Destroy', tweet, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+      <% a = a + 1 %>
+    <% end %>
+  </tbody>
+</table>
+
+
+<br>
+
+
+
