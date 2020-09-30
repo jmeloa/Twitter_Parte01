@@ -4,7 +4,13 @@ class TweetsController < ApplicationController
   # GET /tweets
   # GET /tweets.json
   def index
-    @tweets = Tweet.order("created_at DESC").page(params[:page]).per_page(5)
+    
+    friends = Friend.where("user_id=?" , current_user&.id)
+    #obtengo los amigos del usuario
+    aux2=friends.pluck :friend_id
+    #saco los twitter de los amigos
+    aux = Tweet.where(user_id: aux2)
+    @tweets = aux.order("created_at DESC").page(params[:page]).per_page(5)
   end
 
   # GET /tweets/1

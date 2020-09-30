@@ -1,16 +1,20 @@
 <p id="notice"><%= notice %></p>
 
 <h1>Bienvenido a Twitter</h1>
+<p>Estos son los twitter tuyos y de tus amigos</p>
 <% if user_signed_in? %>
     <p align="right">Bienvenido <%= current_user.user_name %></p>
 <% end %>
 
 <%= button_to 'Nuevo Tweet', new_tweet_path, method: 'get' %>
 
+
+ 
 <%= will_paginate @tweets, previous_label: h("<"), next_label: h(">") %>
 <table class="table table-striped">
   <thead>
     <tr >
+    
       <th scope="col">#</th>
       <th scope="col">Post</th>
       <th scope="col" align="center">User</th>
